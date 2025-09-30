@@ -13,7 +13,7 @@ This document describes the implementation of a minimalist 2026 + classical desi
 
 ### Light Theme
 ```css
---minimalist-bg: #F6F5F4;        /* Warm ivory background */
+--minimalist-bg: #F6F5F3;        /* Warm ivory background */
 --minimalist-card: #FFFFFF;      /* Pure white cards */
 --minimalist-text: #0F1720;      /* Deep charcoal text */
 --minimalist-muted: #7A7A7A;     /* Muted text */
