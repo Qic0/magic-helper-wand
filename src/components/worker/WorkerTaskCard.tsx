@@ -127,17 +127,34 @@ const WorkerTaskCard = ({ task, currentTime, onClick, index = 0 }: WorkerTaskCar
             <div className="flex-shrink-0 text-right space-y-4">
               {/* Оплата - ОЧЕНЬ крупная */}
               <motion.div 
-                className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl p-6 border border-green-200"
+                className={`rounded-2xl p-6 border ${
+                  isOverdue 
+                    ? 'bg-gradient-to-br from-red-50 to-orange-50 border-red-200'
+                    : 'bg-gradient-to-br from-green-50 to-emerald-50 border-green-200'
+                }`}
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 <div className="text-xs text-muted-foreground mb-1 uppercase tracking-wider">
                   Оплата
                 </div>
-                <div className="font-bold text-5xl text-green-700">
-                  {formatCurrency(task.salary || 0)}
-                  <span className="text-3xl ml-1">₽</span>
-                </div>
+                {isOverdue ? (
+                  <div className="space-y-1">
+                    <div className="font-bold text-3xl text-red-400 line-through">
+                      {formatCurrency(task.salary || 0)}
+                      <span className="text-xl ml-1">₽</span>
+                    </div>
+                    <div className="font-bold text-5xl text-red-700">
+                      {formatCurrency((task.salary || 0) * 0.9)}
+                      <span className="text-3xl ml-1">₽</span>
+                    </div>
+                  </div>
+                ) : (
+                  <div className="font-bold text-5xl text-green-700">
+                    {formatCurrency(task.salary || 0)}
+                    <span className="text-3xl ml-1">₽</span>
+                  </div>
+                )}
               </motion.div>
 
               {/* Таймер */}
