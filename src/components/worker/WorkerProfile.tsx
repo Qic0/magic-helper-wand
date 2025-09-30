@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { User, Mail, Briefcase } from "lucide-react";
+import { WorkerDetailsDialog } from "@/components/WorkerDetailsDialog";
 
 interface WorkerProfileProps {
   user: {
@@ -14,9 +16,22 @@ interface WorkerProfileProps {
 }
 
 const WorkerProfile = ({ user, isOnline }: WorkerProfileProps) => {
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  // Адаптируем данные пользователя к формату Worker
+  const workerData = {
+    uuid_user: user.id,
+    full_name: user.full_name || 'Сотрудник',
+    email: user.email || '',
+    role: user.role || 'worker',
+    avatar_url: user.avatar_url,
+    created_at: new Date().toISOString(),
+  };
+
   return (
-    <Card className="border-2">
-      <CardContent className="p-6">
+    <>
+      <Card className="border-2 cursor-pointer hover:shadow-lg transition-all duration-200" onClick={() => setDialogOpen(true)}>
+        <CardContent className="p-6">
         <div className="flex flex-col items-center text-center space-y-4">
           {/* Аватар с индикатором онлайн */}
           <div className="relative">
@@ -55,6 +70,13 @@ const WorkerProfile = ({ user, isOnline }: WorkerProfileProps) => {
         </div>
       </CardContent>
     </Card>
+
+    <WorkerDetailsDialog
+      worker={workerData}
+      open={dialogOpen}
+      onOpenChange={setDialogOpen}
+    />
+    </>
   );
 };
 
