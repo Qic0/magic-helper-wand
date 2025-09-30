@@ -77,10 +77,24 @@ const WorkerTaskCard = ({ task, currentTime, onClick, index = 0 }: WorkerTaskCar
       <Card 
         className={`
           cursor-pointer transition-all duration-300 hover:shadow-2xl hover:-translate-y-1
-          ${isOverdue ? 'border-red-500 border-2 bg-red-50/50' : 'border-border'}
+          ${isOverdue ? 'border-red-500 border-2 bg-red-50/50 animate-pulse shadow-lg shadow-red-500/50' : 'border-border'}
         `}
         onClick={onClick}
       >
+        <motion.div
+          animate={isOverdue ? {
+            boxShadow: [
+              '0 0 0 0 rgba(239, 68, 68, 0.7)',
+              '0 0 0 10px rgba(239, 68, 68, 0)',
+              '0 0 0 0 rgba(239, 68, 68, 0)'
+            ]
+          } : {}}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+        >
         <CardContent className="p-6">
           <div className="flex items-start justify-between gap-6">
             {/* Левый блок - информация */}
@@ -200,6 +214,7 @@ const WorkerTaskCard = ({ task, currentTime, onClick, index = 0 }: WorkerTaskCar
             </div>
           </div>
         </CardContent>
+        </motion.div>
       </Card>
     </motion.div>
   );
